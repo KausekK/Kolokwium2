@@ -17,13 +17,16 @@ public class Context : DbContext
         base.OnModelCreating(modelBuilder);
         
         modelBuilder.Entity<Characters>().HasData(
-            new Characters { Id = 1, FirstName = "John", LastName = "Yakuza", CurrentWeight = 43, MaxWeight = 200 }
+            new Characters { Id = 1, FirstName = "John", LastName = "Yakuza", CurrentWeight = 43, MaxWeight = 200 },
+            new Characters { Id = 2, FirstName = "Jan", LastName = "Kowalski", CurrentWeight = 43, MaxWeight = 200 }
+
         );
         
         modelBuilder.Entity<Items>().HasData(
             new Items { Id = 1, Name = "Item1", Weight = 10 },
             new Items { Id = 2, Name = "Item2", Weight = 11 },
-            new Items { Id = 3, Name = "Item3", Weight = 12 }
+            new Items { Id = 3, Name = "Item3", Weight = 12 },
+            new Items { Id = 4, Name = "Item4", Weight = 13 }
         );
 
         modelBuilder.Entity<Titles>().HasData(
@@ -35,7 +38,8 @@ public class Context : DbContext
         modelBuilder.Entity<backpacks>().HasData(
             new backpacks { CharacterId = 1, ItemId = 1, Amount = 2 },
             new backpacks { CharacterId = 1, ItemId = 2, Amount = 1 },
-            new backpacks { CharacterId = 1, ItemId = 3, Amount = 1 }
+            new backpacks { CharacterId = 1, ItemId = 3, Amount = 1 },
+            new backpacks { CharacterId = 2, ItemId = 2, Amount = 1 }
         );
 
         modelBuilder.Entity<CharactersTitles>().HasData(

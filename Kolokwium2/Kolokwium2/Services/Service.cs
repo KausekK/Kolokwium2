@@ -1,7 +1,6 @@
 ﻿using Kolokwium2.Data;
 using Kolokwium2.DTOs.response;
 using Kolokwium2.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace Kolokwium2.Services;
@@ -19,9 +18,9 @@ public class Service
     {
         var character = await _context.Characters
             .Include(c => c.Backpacks)
-            .ThenInclude(b => b.Items)
+                 .ThenInclude(b => b.Items)
             .Include(c => c.Titles)
-            .ThenInclude(ct => ct.titles)
+                 .ThenInclude(ct => ct.titles)
             .FirstOrDefaultAsync(c => c.Id == id);
 
         if (character == null)
@@ -29,31 +28,31 @@ public class Service
             return null;
         }
 
-        var result = new CharacterDTO
+        return new CharacterDTO
         {
             firstName = character.FirstName,
             lastName = character.LastName,
             currentWeight = character.CurrentWeight,
             maxWeight = character.MaxWeight,
-            BackpackItemDtos = character.Backpacks.Select(b => new BackpackItemDTO
+            backpackItems = character.Backpacks.Select(b => new BackpackItemDTO
             {
                itemName = b.Items.Name,
                itemWeight = b.Items.Weight,
                amount = b.Amount
             }).ToList(),
-            TitlesDtos = character.Titles.Select(t => new TitlesDTO
+            titles = character.Titles.Select(t => new TitlesDTO
             {
                title = t.titles.Name,
                aquiredAt = t.AcquiredAt
             }).ToList()
         };
-        return result;
     }
 
     public async Task<List<BackpackItemDTO>> AddItemsToBackpack(int characterId, List<int> itemIds)
     {
         var character = await _context.Characters
             .Include(c => c.Backpacks)
+                 .ThenInclude(b=>b.Items)
             .FirstOrDefaultAsync(c => c.Id == characterId);
 
         if (character == null)
@@ -95,6 +94,5 @@ public class Service
             itemWeight = b.Items.Weight,
             amount = b.Amount
         }).ToList();
-
     }
 }

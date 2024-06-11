@@ -33,9 +33,9 @@ public class Controller : ControllerBase
             var result = await _services.AddItemsToBackpack(characterId, items);
             return Ok(result);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            return BadRequest(ex.Message);
+            return BadRequest("Blad podczas dodawania itemu do charakteru");
         }
     }
 }
